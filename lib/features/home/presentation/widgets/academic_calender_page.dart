@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class AcademicCalenderPage extends StatefulWidget {
@@ -32,16 +33,20 @@ class _AcademicCalenderPageState extends State<AcademicCalenderPage> {
             clipBehavior: Clip.hardEdge,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: SfPdfViewer.asset(
-                'assets/pdf/2025_even.pdf',
-                enableTextSelection: false,
-                canShowPaginationDialog: false,
-                canShowTextSelectionMenu: false,
-                canShowHyperlinkDialog: false,
-                interactionMode: PdfInteractionMode.pan,
-                canShowSignaturePadDialog: false,
-                canShowScrollHead: false,
-                maxZoomLevel: 4,
+              child: SfPdfViewerTheme(
+                data: SfPdfViewerThemeData(
+                    backgroundColor: Theme.of(context).cardColor),
+                child: SfPdfViewer.asset(
+                  'assets/pdf/2025_even.pdf',
+                  enableTextSelection: false,
+                  canShowPaginationDialog: false,
+                  canShowTextSelectionMenu: false,
+                  canShowHyperlinkDialog: false,
+                  interactionMode: PdfInteractionMode.pan,
+                  canShowSignaturePadDialog: false,
+                  canShowScrollHead: false,
+                  maxZoomLevel: 4,
+                ),
               ),
             )),
       ),

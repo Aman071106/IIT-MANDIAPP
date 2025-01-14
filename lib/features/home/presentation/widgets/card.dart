@@ -4,8 +4,14 @@ class CardWidget extends StatefulWidget {
   final String text;
   final IconData icon;
   final Function() onTap;
+  final bool isTrue;
+
   const CardWidget(
-      {super.key, required this.text, required this.icon, required this.onTap});
+      {super.key,
+      required this.text,
+      required this.icon,
+      required this.onTap,
+      this.isTrue = false});
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
@@ -21,8 +27,10 @@ class _CardWidgetState extends State<CardWidget> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(
-              color: Theme.of(context).colorScheme.onSurface,
-              width: 1.5,
+              color: widget.isTrue
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).colorScheme.onSurface,
+              width: widget.isTrue ? 3 : 1.5,
             )),
         clipBehavior: Clip.hardEdge,
         child: SizedBox(
