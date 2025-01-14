@@ -22,98 +22,260 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        primary: true,
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 40,
-              child: Text(
-                currentJob.name,
-                softWrap: true,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 23),
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          primary: true,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                child: Text(
+                  currentJob.name,
+                  softWrap: true,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontSize: 23),
+                ),
               ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    rectBoxWidget(context, "Job Type", currentJob.type),
-                    rectBoxWidget(context, "Location", currentJob.location),
-                    rectBoxWidget(
-                        context, "Stipend", currentJob.stipend), //add stipend
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Image.network(
-                        currentJob.image ?? "",
-                        fit: BoxFit.contain,
-                        height: MediaQuery.of(context).size.height * 0.135 + 15,
-                        width: (MediaQuery.of(context).size.width - 90) / 2,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Icon(
-                            Icons.error,
-                            size: MediaQuery.of(context).size.width * 0.08,
-                            color: Theme.of(context).colorScheme.onError,
-                          );
-                        },
-                      ),
-                    ),
-                    rectBoxWidget(context, "Duration", currentJob.duration),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 40,
-              height: MediaQuery.of(context).size.height * 0.05,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Icon(
-                    Icons.av_timer_rounded,
-                    size: 30,
-                    color: Theme.of(context).colorScheme.onError,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AboutJobWidget(context, "Job Type", currentJob.type),
+                      AboutJobWidget(context, "Location", currentJob.location),
+                      AboutJobWidget(
+                          context, "Stipend", currentJob.stipend), //add stipend
+                    ],
                   ),
-                  Text("Apply By ${currentJob.applyBy}",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.onError)),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Image.network(
+                          currentJob.image ?? "",
+                          fit: BoxFit.contain,
+                          height:
+                              MediaQuery.of(context).size.height * 0.135 + 15,
+                          width: (MediaQuery.of(context).size.width - 90) / 2,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.error,
+                              size: MediaQuery.of(context).size.width * 0.08,
+                              color: Theme.of(context).colorScheme.onError,
+                            );
+                          },
+                        ),
+                      ),
+                      AboutJobWidget(context, "Duration", currentJob.duration),
+                    ],
+                  ),
                 ],
               ),
-            ),
-          ],
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                height: MediaQuery.of(context).size.height * 0.05,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.av_timer_rounded,
+                      size: 30,
+                      color: Theme.of(context).colorScheme.onError,
+                    ),
+                    Text("Apply By ${currentJob.applyBy}",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 16,
+                            color: Theme.of(context).colorScheme.onError)),
+                  ],
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                child: Card(
+                  color: Theme.of(context).cardColor,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .scrim
+                          .withValues(alpha: 0.5),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Eligibility Criteria",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 17),
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01),
+                        Text(
+                          "Education: ${currentJob.eligibilityCriteria.education}",
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .copyWith(fontSize: 16),
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01),
+                        Text(
+                          "CGPA: ${currentJob.eligibilityCriteria.cgpa}",
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .copyWith(fontSize: 16),
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01),
+                        Text(
+                          "Skills: ${currentJob.eligibilityCriteria.skills}",
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .copyWith(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                child: Card(
+                  color: Theme.of(context).cardColor,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .scrim
+                          .withValues(alpha: 0.5),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Job Details",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 17),
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01),
+                        Text(
+                          currentJob.details,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .copyWith(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                child: Card(
+                  color: Theme.of(context).cardColor,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .scrim
+                          .withValues(alpha: 0.5),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Contact for Help",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 17),
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01),
+                        Text(
+                          currentJob.contact.name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .copyWith(fontSize: 16),
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01),
+                        Text(
+                          currentJob.contact.phoneNo,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .copyWith(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-Widget rectBoxWidget(BuildContext context, String heading, String value) {
+Widget AboutJobWidget(BuildContext context, String heading, String value) {
   return Container(
     width: (MediaQuery.of(context).size.width - 60) / 2,
     height: MediaQuery.of(context).size.height * 0.065,
