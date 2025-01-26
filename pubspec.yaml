@@ -55,7 +55,7 @@ dependencies:
   realm:
   mongo_dart:
   fluttertoast: ^8.2.10
-#  image_picker: ^1.1.2
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:

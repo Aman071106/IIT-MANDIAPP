@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           reverse: true,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),

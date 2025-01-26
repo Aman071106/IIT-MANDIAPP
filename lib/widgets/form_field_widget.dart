@@ -13,7 +13,7 @@ class FormFieldWidget extends StatefulWidget {
   final bool showSuffixIcon;
   final String hintText;
   final TextInputAction textInputAction;
-  // final void Function() onTap;
+  final void Function()? onTap;
 
   FormFieldWidget({
     super.key,
@@ -21,13 +21,13 @@ class FormFieldWidget extends StatefulWidget {
     required this.controller,
     required this.obscureText,
     required this.validator,
-    required this.onChanged,
+    this.onChanged,
     required this.keyboardType,
     required this.errorText,
     required this.prefixIcon,
     required this.showSuffixIcon,
     required this.hintText,
-    // required this.onTap,
+    this.onTap,
     required this.focusNode,
     required this.textInputAction,
   });
@@ -46,7 +46,9 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
   @override
   void initState() {
     super.initState();
-    widget.focusNode.addListener(() {});
+    widget.focusNode.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -59,6 +61,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
           onTapOutside: (event) {
             widget.focusNode.unfocus();
           },
+          onTap: widget.onTap,
           controller: widget.controller,
           obscureText: widget.obscureText,
           cursorColor: Theme.of(context).primaryColor,
