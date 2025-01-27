@@ -5,6 +5,7 @@ import 'package:uhl_link/features/home/presentation/widgets/card.dart';
 
 class Explore extends StatefulWidget {
   final bool isGuest;
+
   const Explore({super.key, required this.isGuest});
 
   @override
@@ -28,7 +29,13 @@ class _ExploreState extends State<Explore> {
       "icon": Icons.link_rounded,
       "route": UhlLinkRoutesNames.quickLinksPage
     },
+    {
+      "text": "Lost/Found",
+      "icon": Icons.luggage_rounded,
+      "route": UhlLinkRoutesNames.lostFoundPage
+    },
   ];
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
