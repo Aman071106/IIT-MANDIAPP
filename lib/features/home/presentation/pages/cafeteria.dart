@@ -39,31 +39,27 @@ class Cafeteria extends StatefulWidget {
 }
 
 class _CafeteriaState extends State<Cafeteria> {
-  final List<Map<String, String>> cafeterias = [
+  final List<Map<String, dynamic>> cafeterias = [
     {
       "name": "Cafe Mocha",
       "openingTime": "8:00 AM - 10:00 PM",
       "deliveryTime": "30 mins",
       "contact": "+91 9876543210",
-      "menuImage":
-          "https://img.freepik.com/premium-photo/restaurant-menu-card_1148655-2674.jpg?semt=ais_hybrid"
+      "menuImages": [
+        "https://img.freepik.com/premium-photo/restaurant-menu-card_1148655-2674.jpg",
+        "https://i.pinimg.com/474x/ef/69/cf/ef69cfcf4f215f49c8d419fdd8edb5be.jpg",
+      ]
     },
     {
       "name": "Java Beans",
       "openingTime": "7:30 AM - 9:30 PM",
       "deliveryTime": "25 mins",
       "contact": "+91 8765432109",
-      "menuImage":
-          "https://i.pinimg.com/474x/ef/69/cf/ef69cfcf4f215f49c8d419fdd8edb5be.jpg"
-    },
-    {
-      "name": "The Coffee Hut",
-      "openingTime": "9:00 AM - 11:00 PM",
-      "deliveryTime": "40 mins",
-      "contact": "+91 7654321098",
-      "menuImage":
-          "https://marketplace.canva.com/EAGGkMvO1gk/1/0/1131w/canva-black-illustrative-restaurant-menu-UojxZFjaQDg.jpg"
-    },
+      "menuImages": [
+        "https://marketplace.canva.com/EAGGkMvO1gk/1/0/1131w/canva-black-illustrative-restaurant-menu-UojxZFjaQDg.jpg",
+        "https://img.freepik.com/premium-photo/restaurant-menu-card_1148655-2674.jpg",
+      ]
+    }
   ];
 
   int _show = -1;
@@ -72,7 +68,7 @@ class _CafeteriaState extends State<Cafeteria> {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> filteredCafeterias = cafeterias
+    List<Map<String, dynamic>> filteredCafeterias = cafeterias
         .where((cafe) =>
             cafe["name"]!.toLowerCase().contains(_searched.toLowerCase()))
         .toList();
@@ -246,59 +242,35 @@ class _CafeteriaState extends State<Cafeteria> {
           ),
         ),
         if (_show != -1)
-          InteractiveViewer(
-            panEnabled: true,
-            panAxis: PanAxis.free,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              color: Colors.black.withOpacity(0.8),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  if (_imageLoading)
-                    const CircularProgressIndicator(color: Colors.white),
-                  Image.network(
-                    cafeterias[_show]["menuImage"]!,
-                    fit: BoxFit.contain,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(color: Colors.white),
+          Container(
+            color: Colors.black.withOpacity(0.8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    itemCount: cafeterias[_show]["menuImages"].length,
+                    itemBuilder: (context, imgIndex) {
+                      return Center(
+                        child: Image.network(
+                          cafeterias[_show]["menuImages"][imgIndex],
+                          fit: BoxFit.contain,
+                        ),
                       );
                     },
-                    errorBuilder: (context, error, stackTrace) => const Center(
-                      child: Text(
-                        "Failed to load image",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
                   ),
-                  Positioned(
-                    bottom: 20,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey.withOpacity(0.9),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _show = -1;
-                        });
-                      },
-                      child: const Text(
-                        "Close",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _show = -1;
+                    });
+                  },
+                  child: const Text("Close"),
+                ),
+              ],
             ),
-          ),
+          )
       ],
     );
   }
